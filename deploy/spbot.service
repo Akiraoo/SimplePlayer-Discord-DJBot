@@ -1,0 +1,26 @@
+[Unit]
+Description=Simple Player Discord bot
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=spbot
+Group=spbot
+WorkingDirectory=/opt/simpleplayer-discord-bot
+Environment=YTDLP=/usr/local/bin/yt-dlp
+ExecStart=/usr/bin/node --env-file=.env src/index.js
+Restart=always
+RestartSec=5
+# yt-dlp keeps a cache in the home folder
+Environment=HOME=/opt/simpleplayer-discord-bot
+Environment=XDG_CACHE_HOME=/opt/simpleplayer-discord-bot/.cache
+
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/opt/simpleplayer-discord-bot
+
+[Install]
+WantedBy=multi-user.target
